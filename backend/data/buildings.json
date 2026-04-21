@@ -1,0 +1,230 @@
+[
+  {
+    "id": "palatul-parlamentului",
+    "name": "Palatul Parlamentului",
+    "shortName": "Parlament",
+    "year": 1997,
+    "architect": "Anca Petrescu",
+    "style": "Realism Socialist",
+    "tag": "Clădire Administrativă",
+    "facts": [
+      "Al doilea cea mai mare clădire administrativă din lume, după Pentagonul SUA.",
+      "1.100 de camere distribuite pe 12 niveluri suprateran și 8 subterane.",
+      "Construcția a implicat 20.000 de muncitori și 700 de arhitecți."
+    ],
+    "blurb": "Ridicată la comanda lui Nicolae Ceaușescu, clădirea este un simbol controversat al epocii comuniste și găzduiește astăzi Camera Deputaților și Senatul României.",
+    "coordinates": { "lat": 44.4273, "lng": 26.0875 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Palatul_Parlamentului",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Palace_of_Parliament.jpg/1200px-Palace_of_Parliament.jpg",
+    "rating": 4.8
+  },
+  {
+    "id": "ateneul-roman",
+    "name": "Ateneul Român",
+    "shortName": "Ateneul",
+    "year": 1888,
+    "architect": "Albert Galleron",
+    "style": "Neoclasic",
+    "tag": "Patrimoniu UNESCO",
+    "facts": [
+      "Construit prin donații publice — campania 'Dați un leu pentru Ateneu'.",
+      "Sala mare are o acustică considerată printre cele mai bune din Europa.",
+      "Frescă interioară de 75 m lungime ilustrând istoria României."
+    ],
+    "blurb": "Inima muzicii clasice românești și sediul Filarmonicii 'George Enescu'. Domul de 41 m înălțime este un reper al Pieței George Enescu.",
+    "coordinates": { "lat": 44.4407, "lng": 26.0979 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Ateneul_Român",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Romanian_Athenaeum.jpg/1200px-Romanian_Athenaeum.jpg",
+    "rating": 4.9
+  },
+  {
+    "id": "turnul-coltea",
+    "name": "Turnul Colțea",
+    "shortName": "Colțea",
+    "year": 1715,
+    "architect": "Necunoscut",
+    "style": "Brâncovenesc",
+    "tag": "Monument Istoric",
+    "facts": [
+      "A fost cel mai înalt punct al Bucureștiului până în secolul al XIX-lea.",
+      "Reconstruit de mai multe ori după cutremure și incendii.",
+      "Are 25 de metri înălțime și a servit drept foișor de foc."
+    ],
+    "blurb": "Parte a ansamblului Spitalului Colțea, turnul este unul dintre puținele monumente păstrate din perioada brâncovenească în București.",
+    "coordinates": { "lat": 44.4329, "lng": 26.1011 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Turnul_Colțea",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Coltea_tower.jpg/800px-Coltea_tower.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": "palatul-cec",
+    "name": "Palatul CEC",
+    "shortName": "CEC",
+    "year": 1900,
+    "architect": "Paul Gottereau",
+    "style": "Eclectic francez",
+    "tag": "Monument Istoric",
+    "facts": [
+      "Cupolă de sticlă și metal, 25 m diametru, o performanță tehnică a epocii.",
+      "Construit pe locul fostei mănăstiri Sfântul Ioan cel Mare.",
+      "A fost sediul Casei de Economii și Consemnațiuni din 1900."
+    ],
+    "blurb": "Considerat una dintre cele mai frumoase clădiri de pe Calea Victoriei, fațada sa eclectică amintește de arhitectura pariziană Belle Époque.",
+    "coordinates": { "lat": 44.4319, "lng": 26.0982 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Palatul_CEC",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/CEC_Palace_Bucharest.jpg/1200px-CEC_Palace_Bucharest.jpg",
+    "rating": 4.7
+  },
+  {
+    "id": "palatul-regal",
+    "name": "Palatul Regal",
+    "shortName": "Palatul Regal",
+    "year": 1937,
+    "architect": "Nicolae Nenciulescu",
+    "style": "Neoclasic",
+    "tag": "Muzeu Național",
+    "facts": [
+      "Găzduiește Muzeul Național de Artă al României cu peste 70.000 de opere.",
+      "A servit ca reședință regală din 1834 până în 1947.",
+      "Fațada actuală a fost realizată după un incendiu în 1927."
+    ],
+    "blurb": "Fosta reședință a familiei regale române, transformată în muzeu după instaurarea comunismului. Se află în centrul Pieței Revoluției.",
+    "coordinates": { "lat": 44.4412, "lng": 26.0974 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Palatul_Regal_din_București",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Palatul_regal_din_Bucuresti.jpg/1200px-Palatul_regal_din_Bucuresti.jpg",
+    "rating": 4.6
+  },
+  {
+    "id": "biserica-stavropoleos",
+    "name": "Biserica Stavropoleos",
+    "shortName": "Stavropoleos",
+    "year": 1724,
+    "architect": "Ioanichie Stratonikeas",
+    "style": "Brâncovenesc",
+    "tag": "Monument Istoric",
+    "facts": [
+      "Una dintre cele mai bine păstrate biserici din București.",
+      "Numele vine din greacă și înseamnă 'Orașul Crucii'.",
+      "Adăpostește o colecție valoroasă de icoane și manuscrise medievale."
+    ],
+    "blurb": "Bijuterie arhitecturală în stil brâncovenesc, această mică biserică situată în Centrul Vechi este apreciată pentru sculpturile sale în piatră și fresca exterioară.",
+    "coordinates": { "lat": 44.4326, "lng": 26.1002 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Mănăstirea_Stavropoleos",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Stavropoleos_Church_Bucharest.jpg/800px-Stavropoleos_Church_Bucharest.jpg",
+    "rating": 4.8
+  },
+  {
+    "id": "arcul-de-triumf",
+    "name": "Arcul de Triumf",
+    "shortName": "Arcul",
+    "year": 1936,
+    "architect": "Petre Antonescu",
+    "style": "Neoclasic",
+    "tag": "Monument Național",
+    "facts": [
+      "Înălțime de 27 m, construit pentru a comemora Marea Unire din 1918.",
+      "Sculpturi realizate de cei mai importanți artiști români ai epocii.",
+      "Poate fi vizitat în interior — oferă panoramă asupra Pieței Charles de Gaulle."
+    ],
+    "blurb": "Simbolul victoriei militare românești, Arcul de Triumf domină Piața Charles de Gaulle și Calea Victoriei. Este inspirat de celebrul Arc de Triomphe din Paris.",
+    "coordinates": { "lat": 44.4659, "lng": 26.0777 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Arcul_de_Triumf_(București)",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Arcul_de_Triumf_Bucuresti.jpg/800px-Arcul_de_Triumf_Bucuresti.jpg",
+    "rating": 4.7
+  },
+  {
+    "id": "hanul-lui-manuc",
+    "name": "Hanul lui Manuc",
+    "shortName": "Hanul Manuc",
+    "year": 1808,
+    "architect": "Necunoscut",
+    "style": "Otoman-Balcanic",
+    "tag": "Monument Istoric",
+    "facts": [
+      "Construit de Emanuel Mârzaian (Manuc Bei), negustor armean.",
+      "Unul dintre puținele hanuri medievale păstrate din București.",
+      "Tratatul de pace ruso-turc din 1812 a fost negociat în acest han."
+    ],
+    "blurb": "Cel mai vechi hotel în funcțiune din București, Hanul lui Manuc este un exemplu rar de arhitectură comercială balcanică din epoca fanariotă.",
+    "coordinates": { "lat": 44.4320, "lng": 26.1030 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Hanul_lui_Manuc",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Hanul_lui_Manuc.jpg/800px-Hanul_lui_Manuc.jpg",
+    "rating": 4.4
+  },
+  {
+    "id": "palatul-cantacuzino",
+    "name": "Palatul Cantacuzino",
+    "shortName": "Cantacuzino",
+    "year": 1906,
+    "architect": "Ion D. Berindei",
+    "style": "Art Nouveau",
+    "tag": "Monument Muzeal",
+    "facts": [
+      "Construcție Art Nouveau rară în București, cu influențe franceze.",
+      "Găzduiește Muzeul George Enescu, cu obiecte aparținând marelui compozitor.",
+      "Poarta principală este decorată cu motive florale turnate în bronz."
+    ],
+    "blurb": "Fostă reședință a prinților Cantacuzino, palatul este unul dintre cele mai elegante exemple de Art Nouveau din România și adăpostește patrimoniul compozitorului George Enescu.",
+    "coordinates": { "lat": 44.4430, "lng": 26.0970 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Palatul_Cantacuzino",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Palatul_Cantacuzino_-_front.jpg/800px-Palatul_Cantacuzino_-_front.jpg",
+    "rating": 4.6
+  },
+  {
+    "id": "gara-de-nord",
+    "name": "Gara de Nord",
+    "shortName": "Gara de Nord",
+    "year": 1872,
+    "architect": "Necunoscut",
+    "style": "Eclectic",
+    "tag": "Infrastructură Istorică",
+    "facts": [
+      "Cea mai importantă gară din România, cu peste 100.000 de călători pe zi.",
+      "Fațada actuală a fost renovată în 1938 în stil modernist.",
+      "A fost punctul de plecare al unor evenimente istorice majore."
+    ],
+    "blurb": "Principalul nod feroviar al Capitalei, Gara de Nord leagă Bucureștiul de toate marile orașe ale țării și este un simbol al mobilității urbane moderne.",
+    "coordinates": { "lat": 44.4453, "lng": 26.0696 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Gara_de_Nord_din_București",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Gara_de_Nord.jpg/1200px-Gara_de_Nord.jpg",
+    "rating": 4.2
+  },
+  {
+    "id": "palatul-telefoanelor",
+    "name": "Palatul Telefoanelor",
+    "shortName": "Telefoane",
+    "year": 1934,
+    "architect": "Walter Froy, Louis Week, Edmond Van Saanen Algi",
+    "style": "Art Deco",
+    "tag": "Monument Arhitectural",
+    "facts": [
+      "Prima clădire cu structură de beton armat și schelet metalic din România.",
+      "A fost cea mai înaltă clădire din București la momentul construcției.",
+      "Modelat după zgârie-norii americani din anii 1920."
+    ],
+    "blurb": "Simbol al modernizării interbelice a Bucureștiului, Palatul Telefoanelor aduce spiritul Art Deco american în inima Căii Victoriei.",
+    "coordinates": { "lat": 44.4390, "lng": 26.0960 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Palatul_Telefoanelor",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Palatul_telefoanelor_Bucharest.jpg/800px-Palatul_telefoanelor_Bucharest.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": "cercul-militar",
+    "name": "Cercul Militar Național",
+    "shortName": "Cercul Militar",
+    "year": 1912,
+    "architect": "Dimitrie Maimarolu",
+    "style": "Neoclasic Francez",
+    "tag": "Monument Istoric",
+    "facts": [
+      "Construit pentru a servi drept club social al ofițerilor armatei române.",
+      "Sala de bal are o suprafață de 600 mp și o înălțime de 12 m.",
+      "Fațada este decorată cu basoreliefuri inspirate din mitologia greco-romană."
+    ],
+    "blurb": "Impozant edificiu neoclasic pe Calea Victoriei, Cercul Militar Național găzduiește și astăzi evenimente culturale și diplomatice de prestigiu.",
+    "coordinates": { "lat": 44.4350, "lng": 26.0979 },
+    "wikipediaUrl": "https://ro.wikipedia.org/wiki/Cercul_Militar_Național",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Cercul_Militar_National_Bucharest.jpg/800px-Cercul_Militar_National_Bucharest.jpg",
+    "rating": 4.6
+  }
+]
