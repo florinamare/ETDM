@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "AR Tourist",
+    "slug": "tourist-ar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#07070a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.etdm.touristar",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera este folosită pentru a recunoaște clădirile istorice în timp real și a afișa informații AR.",
+        "NSMicrophoneUsageDescription": "Microfonul permite utilizarea asistentului vocal AI pentru întrebări despre clădiri.",
+        "NSLocationWhenInUseUsageDescription": "Locația este folosită pentru a găsi clădiri istorice din apropiere.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Locația este folosită pentru a găsi clădiri istorice din apropiere."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#07070a"
+      },
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Camera este folosită pentru a recunoaște clădirile istorice.",
+          "microphonePermission": "Microfonul permite asistentul vocal AI.",
+          "recordAudioAndroid": true
+        }
+      ]
+    ]
+  }
+}
