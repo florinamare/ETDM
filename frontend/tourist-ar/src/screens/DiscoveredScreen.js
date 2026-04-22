@@ -95,7 +95,7 @@ export default function DiscoveredScreen({ navigation }) {
             <View style={styles.header}>
               <Text style={styles.headerLabel}>◆ PROGRES</Text>
               <Text style={styles.headerTitle}>Descoperite</Text>
-              <Text style={styles.headerSub}>Centrul Vechi · București</Text>
+              <Text style={styles.headerSub}>Centrul Istoric · Timișoara</Text>
             </View>
 
             {/* Progress card */}

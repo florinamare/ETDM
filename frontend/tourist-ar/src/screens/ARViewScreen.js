@@ -268,7 +268,7 @@ export default function ARViewScreen({ navigation }) {
           <Animated.View style={[styles.hudDot, { backgroundColor: accent, shadowColor: accent }]} />
           <View>
             <Text style={[styles.hudMode, { color: accent }]}>AR ACTIV</Text>
-            <Text style={styles.hudLocation}>Centrul Vechi · București</Text>
+            <Text style={styles.hudLocation}>Centrul Istoric · Timișoara</Text>
           </View>
         </View>
         <View style={styles.hudRight}>

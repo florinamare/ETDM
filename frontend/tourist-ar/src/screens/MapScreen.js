@@ -12,9 +12,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../context/AppContext';
 import { colors, fonts } from '../constants/theme';
 
-const BUCHAREST_REGION = {
-  latitude: 44.4359,
-  longitude: 26.0981,
+const TIMISOARA_REGION = {
+  latitude: 45.7517,
+  longitude: 21.2175,
   latitudeDelta: 0.018,
   longitudeDelta: 0.018,
 };
@@ -103,7 +103,7 @@ export default function MapScreen({ navigation }) {
       <MapView
         ref={mapRef}
         style={StyleSheet.absoluteFill}
-        initialRegion={BUCHAREST_REGION}
+        initialRegion={TIMISOARA_REGION}
         customMapStyle={MAP_STYLE}
         showsUserLocation
         showsCompass={false}
@@ -131,7 +131,7 @@ export default function MapScreen({ navigation }) {
           <Ionicons name="map" size={14} color={colors.accent} />
           <View>
             <Text style={styles.hudTitle}>Hartă AR</Text>
-            <Text style={styles.hudSub}>București · Centrul Vechi</Text>
+            <Text style={styles.hudSub}>Timișoara · Centrul Istoric</Text>
           </View>
         </View>
         <View style={styles.hudStats}>

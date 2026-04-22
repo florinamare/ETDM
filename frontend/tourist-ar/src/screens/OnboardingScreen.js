@@ -27,7 +27,7 @@ const SLIDES = [
     kind: 'voice',
   },
   {
-    title: 'Colecționează\nBucureștiul.',
+    title: 'Colecționează\nTimișoara.',
     sub: 'Deblochează clădiri pe hartă, urmărește-ți progresul și împarte descoperirile.',
     kind: 'collect',
   },
@@ -50,8 +50,8 @@ function ARIllust() {
       </View>
       <View style={illust.card}>
         <Text style={illust.cardLabel}>RECUNOSCUT</Text>
-        <Text style={illust.cardName}>Ateneul</Text>
-        <Text style={illust.cardMeta}>1888 · Neoclasic</Text>
+        <Text style={illust.cardName}>Opera</Text>
+        <Text style={illust.cardMeta}>1875 · Baroc Vienez</Text>
         <View style={illust.cardBar} />
       </View>
       {['tl', 'tr', 'bl', 'br'].map(pos => (
@@ -92,7 +92,7 @@ function VoiceIllust() {
 }
 
 function CollectIllust() {
-  const buildingNames = ['Parlament', 'Ateneul', 'Colțea', 'CEC'];
+  const buildingNames = ['Catedrala', 'Opera', 'Castelul', 'Dom-ul'];
   const accents = ['#FFB26B', '#8BD3FF', '#B8F0C2', '#E1B9FF'];
   const positions = [
     { top: 20, left: 10 },
