@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,27 @@ import {
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import * as Location from 'expo-location';
 import { useApp } from '../context/AppContext';
 import { colors, fonts } from '../constants/theme';
+
+function haversineMeters(a, b) {
+  if (!a || !b) return null;
+  const R = 6371000;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const la1 = toRad(a.lat);
+  const la2 = toRad(b.lat);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
+  return Math.round(2 * R * Math.asin(Math.sqrt(h)));
+}
+
+function formatDistance(m) {
+  if (m == null) return null;
+  if (m < 1000) return `${m} m`;
+  return `${(m / 1000).toFixed(1)} km`;
+}
 
 const TIMISOARA_REGION = {
   latitude: 45.7517,
@@ -78,7 +97,27 @@ function BuildingPin({ building, isDiscovered, isActive, onPress }) {
 export default function MapScreen({ navigation }) {
   const { buildings, discovered, activeBuilding, setActiveBuilding } = useApp();
   const [selectedBuilding, setSelectedBuilding] = useState(null);
+  const [userCoords, setUserCoords] = useState(null);
   const mapRef = useRef(null);
+
+  useEffect(() => {
+    let sub;
+    (async () => {
+      try {
+        const perm = await Location.requestForegroundPermissionsAsync();
+        if (!perm.granted) return;
+        sub = await Location.watchPositionAsync(
+          { accuracy: Location.Accuracy.Balanced, distanceInterval: 10, timeInterval: 5000 },
+          (loc) => setUserCoords({ lat: loc.coords.latitude, lng: loc.coords.longitude }),
+        );
+      } catch (_) {}
+    })();
+    return () => { sub && sub.remove(); };
+  }, []);
+
+  const selectedDistance = selectedBuilding && userCoords && selectedBuilding.coordinates
+    ? formatDistance(haversineMeters(userCoords, selectedBuilding.coordinates))
+    : null;
 
   const handleMarkerPress = (building) => {
     setSelectedBuilding(building);
@@ -173,7 +212,7 @@ export default function MapScreen({ navigation }) {
             <View style={styles.infoFooter}>
               <View style={styles.distRow}>
                 <Ionicons name="location" size={12} color={colors.textMuted} />
-                <Text style={styles.dist}>{selectedBuilding.distance}</Text>
+                <Text style={styles.dist}>{selectedDistance || '—'}</Text>
               </View>
               <TouchableOpacity
                 style={[styles.detailBtn, { backgroundColor: selectedBuilding.accent }]}

@@ -11,7 +11,7 @@ const ONBOARDED_KEY = 'etdm_onboarded_v1';
 export function AppProvider({ children }) {
   const [buildings, setBuildings] = useState(BUILDINGS);
   const [discovered, setDiscovered] = useState([]);
-  const [activeBuilding, setActiveBuilding] = useState(BUILDINGS[0]);
+  const [activeBuilding, setActiveBuilding] = useState(null);
   const [hasOnboarded, setHasOnboarded] = useState(null); // null = loading
 
   useEffect(() => {

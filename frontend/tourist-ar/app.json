@@ -46,7 +46,8 @@
           "microphonePermission": "Microfonul permite asistentul vocal AI.",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+      "expo-audio"
     ]
   }
 }

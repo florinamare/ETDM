@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { useApp } from '../context/AppContext';
@@ -73,7 +74,7 @@ function ScanningOverlay({ visible, accent }) {
   );
 }
 
-function AROverlayCard({ building, onTap, onVoice }) {
+function AROverlayCard({ building, distanceLabel, onTap, onVoice }) {
   const scaleAnim = useRef(new Animated.Value(0.88)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -120,7 +121,7 @@ function AROverlayCard({ building, onTap, onVoice }) {
             {[
               { label: 'AN', val: building.year },
               { label: 'STIL', val: building.style },
-              { label: 'DIST', val: building.distance },
+              { label: 'DIST', val: distanceLabel || '—' },
             ].map(s => (
               <View key={s.label} style={card.stat}>
                 <Text style={card.statLabel}>{s.label}</Text>
@@ -141,15 +142,36 @@ function AROverlayCard({ building, onTap, onVoice }) {
 
 function DistantMarker({ building, style, onTap }) {
   const accent = building.accent || colors.accent;
+  const dist = building.distanceMeters != null ? formatDistance(building.distanceMeters) : null;
   return (
     <TouchableOpacity style={[marker.container, style]} onPress={onTap}>
       <View style={[marker.pill, { borderColor: `${accent}66` }]}>
         <View style={[marker.dot, { backgroundColor: accent, shadowColor: accent }]} />
         <Text style={marker.name}>{building.shortName}</Text>
-        <Text style={marker.dist}>· {building.distance}</Text>
+        {dist && <Text style={marker.dist}>· {dist}</Text>}
       </View>
     </TouchableOpacity>
   );
+}
+
+function haversineMeters(a, b) {
+  if (!a || !b) return null;
+  const R = 6371000;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const la1 = toRad(a.lat);
+  const la2 = toRad(b.lat);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
+  return Math.round(2 * R * Math.asin(Math.sqrt(h)));
+}
+
+function formatDistance(m) {
+  if (m == null) return '—';
+  if (m < 1000) return `${m} m`;
+  return `${(m / 1000).toFixed(1)} km`;
 }
 
 export default function ARViewScreen({ navigation }) {
@@ -157,7 +179,8 @@ export default function ARViewScreen({ navigation }) {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanning, setScanning] = useState(false);
   const [scanState, setScanState] = useState('idle'); // idle | scanning | recognized | error
-  const [recognizedBuilding, setRecognizedBuilding] = useState(activeBuilding);
+  const [recognizedBuilding, setRecognizedBuilding] = useState(null);
+  const [userCoords, setUserCoords] = useState(null);
   const cameraRef = useRef(null);
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const rippleAnim = useRef(new Animated.Value(1)).current;
@@ -177,6 +200,20 @@ export default function ARViewScreen({ navigation }) {
         Animated.timing(rippleAnim, { toValue: 1, duration: 0, useNativeDriver: true }),
       ])
     ).start();
+
+    // Watch GPS ca să putem calcula distanțe reale și bearing-ul.
+    let sub;
+    (async () => {
+      try {
+        const perm = await Location.requestForegroundPermissionsAsync();
+        if (!perm.granted) return;
+        sub = await Location.watchPositionAsync(
+          { accuracy: Location.Accuracy.Balanced, distanceInterval: 5, timeInterval: 4000 },
+          (loc) => setUserCoords({ lat: loc.coords.latitude, lng: loc.coords.longitude }),
+        );
+      } catch (_) {}
+    })();
+    return () => { sub && sub.remove(); };
   }, []);
 
   const handleScan = async () => {
@@ -184,19 +221,29 @@ export default function ARViewScreen({ navigation }) {
     setScanning(true);
     setScanState('scanning');
 
+    // Get GPS coordinates for backend fallback matching
+    let coords = null;
+    try {
+      const locPerm = await Location.requestForegroundPermissionsAsync();
+      if (locPerm.granted) {
+        const loc = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        });
+        coords = loc.coords;
+      }
+    } catch (_) {}
+
     try {
       let building = null;
 
       if (cameraRef.current) {
         const photo = await cameraRef.current.takePictureAsync({ base64: true, quality: 0.5 });
-        const res = await recognizeBuilding(photo.base64);
+        const res = await recognizeBuilding(
+          photo.base64,
+          coords?.latitude,
+          coords?.longitude,
+        );
         building = res.data?.building;
-      }
-
-      if (!building) {
-        // Demo fallback: cycle through buildings
-        const idx = buildings.findIndex(b => b.id === recognizedBuilding?.id);
-        building = buildings[(idx + 1) % buildings.length];
       }
 
       if (building) {
@@ -206,28 +253,49 @@ export default function ARViewScreen({ navigation }) {
         setScanState('recognized');
       } else {
         setScanState('error');
-        Alert.alert('Nerecunoscut', 'Clădire nerecunoscută. Încearcă din nou.');
+        Alert.alert('Nerecunoscut', 'Clădire nerecunoscută. Încearcă din nou sau mergi mai aproape.');
         setScanState('idle');
       }
-    } catch {
-      // Demo fallback
-      const idx = buildings.findIndex(b => b.id === recognizedBuilding?.id);
-      const building = buildings[(idx + 1) % buildings.length];
-      setRecognizedBuilding(building);
-      setActiveBuilding(building);
-      addDiscovered(building.id);
-      setScanState('recognized');
+    } catch (err) {
+      setScanState('error');
+      if (err?.response?.status === 404) {
+        Alert.alert('Nerecunoscut', 'Clădire nerecunoscută. Încearcă din nou sau apropie-te mai mult.');
+      } else {
+        Alert.alert('Eroare server', `Cod: ${err?.response?.status ?? 'rețea'}. Verifică că backend-ul ȘI serviciul AIAR sunt pornite.`);
+      }
+      setScanState('idle');
     } finally {
       setScanning(false);
     }
   };
 
-  const otherBuildings = buildings.filter(b => b.id !== recognizedBuilding?.id).slice(0, 3);
+  // Calcul distanță reală față de utilizator + sortare pentru „distant markers"
+  const buildingsWithDist = buildings.map((b) => ({
+    ...b,
+    distanceMeters: userCoords && b.coordinates
+      ? haversineMeters(userCoords, b.coordinates)
+      : null,
+  }));
+
+  const otherBuildings = buildingsWithDist
+    .filter((b) => b.id !== recognizedBuilding?.id)
+    .sort((a, b) => {
+      if (a.distanceMeters == null && b.distanceMeters == null) return 0;
+      if (a.distanceMeters == null) return 1;
+      if (b.distanceMeters == null) return -1;
+      return a.distanceMeters - b.distanceMeters;
+    })
+    .slice(0, 3);
+
   const markerPositions = [
     { position: 'absolute', top: height * 0.15, left: 24 },
     { position: 'absolute', top: height * 0.22, right: 24 },
     { position: 'absolute', top: height * 0.35, left: 40 },
   ];
+
+  const recognizedDistance = recognizedBuilding && userCoords && recognizedBuilding.coordinates
+    ? formatDistance(haversineMeters(userCoords, recognizedBuilding.coordinates))
+    : null;
 
   if (!permission) {
     return <View style={styles.container} />;
@@ -273,12 +341,12 @@ export default function ARViewScreen({ navigation }) {
         </View>
         <View style={styles.hudRight}>
           <Ionicons name="compass" size={14} color={accent} />
-          <Text style={styles.hudCompass}>{recognizedBuilding?.bearing || 'N'} · 42°</Text>
+          <Text style={styles.hudCompass}>{recognizedDistance || 'GPS'}</Text>
         </View>
       </View>
 
-      {/* Distant markers */}
-      {!scanning && otherBuildings.map((b, i) => (
+      {/* Distant markers — vizibile doar după scanare */}
+      {!scanning && recognizedBuilding && otherBuildings.map((b, i) => (
         <DistantMarker
           key={b.id}
           building={b}
@@ -299,6 +367,7 @@ export default function ARViewScreen({ navigation }) {
       {!scanning && (
         <AROverlayCard
           building={recognizedBuilding}
+          distanceLabel={recognizedDistance}
           onTap={() => navigation.navigate('Detail', { building: recognizedBuilding })}
           onVoice={() => navigation.navigate('Voice', { building: recognizedBuilding })}
         />
@@ -307,24 +376,26 @@ export default function ARViewScreen({ navigation }) {
       {/* Scanning overlay */}
       <ScanningOverlay visible={scanning} accent={accent} />
 
-      {/* Building dots selector */}
-      <View style={styles.dotsRow}>
-        {buildings.map(b => (
-          <TouchableOpacity
-            key={b.id}
-            onPress={() => { setRecognizedBuilding(b); setActiveBuilding(b); }}
-            style={[
-              styles.buildingDot,
-              {
-                backgroundColor: b.id === recognizedBuilding?.id ? b.accent : 'rgba(255,255,255,0.25)',
-                width: b.id === recognizedBuilding?.id ? 24 : 6,
-                shadowColor: b.accent,
-                shadowOpacity: b.id === recognizedBuilding?.id ? 0.8 : 0,
-              },
-            ]}
-          />
-        ))}
-      </View>
+      {/* Building dots selector — vizibil doar după scanare */}
+      {recognizedBuilding && (
+        <View style={styles.dotsRow}>
+          {buildings.map(b => (
+            <TouchableOpacity
+              key={b.id}
+              onPress={() => { setRecognizedBuilding(b); setActiveBuilding(b); }}
+              style={[
+                styles.buildingDot,
+                {
+                  backgroundColor: b.id === recognizedBuilding?.id ? b.accent : 'rgba(255,255,255,0.25)',
+                  width: b.id === recognizedBuilding?.id ? 24 : 6,
+                  shadowColor: b.accent,
+                  shadowOpacity: b.id === recognizedBuilding?.id ? 0.8 : 0,
+                },
+              ]}
+            />
+          ))}
+        </View>
+      )}
 
       {/* Action bar */}
       <View style={styles.actionBar}>

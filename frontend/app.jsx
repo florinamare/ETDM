@@ -17,6 +17,22 @@ function App() {
   const [showVoice, setShowVoice] = React.useState(false);
   const [tweaksOn, setTweaksOn] = React.useState(false);
   const [tweaks, setTweaks] = React.useState(TWEAKS);
+  const [buildings, setBuildings] = React.useState(window.buildings);
+  const [apiError, setApiError] = React.useState(null);
+
+  React.useEffect(() => {
+    window.fetchBuildings()
+      .then(data => {
+        if (data && data.length > 0) {
+          setBuildings(data);
+          window.buildings = data;
+        }
+      })
+      .catch(err => {
+        console.warn('[API] Fallback la date locale:', err.message);
+        setApiError(err.message);
+      });
+  }, []);
 
   // Tweaks protocol
   React.useEffect(() => {
@@ -40,7 +56,7 @@ function App() {
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
   };
 
-  const building = window.buildings[activeBuilding];
+  const building = buildings[activeBuilding];
 
   // Tab bar
   const TabBar = () => (
@@ -101,12 +117,12 @@ function App() {
                 onOpenVoice={() => setShowVoice(true)}
                 scanning={scanning}
                 setScanning={setScanning}
-                buildings={window.buildings}
+                buildings={buildings}
               />
             )}
             {!showDetail && tab === 'map' && (
               <MapScreen
-                buildings={window.buildings}
+                buildings={buildings}
                 discovered={discovered}
                 activeBuilding={activeBuilding}
                 setActiveBuilding={setActiveBuilding}
@@ -115,7 +131,7 @@ function App() {
             )}
             {!showDetail && tab === 'list' && (
               <DiscoveredScreen
-                buildings={window.buildings}
+                buildings={buildings}
                 discovered={discovered}
                 setActiveBuilding={setActiveBuilding}
                 onOpenDetail={() => setShowDetail(true)}
